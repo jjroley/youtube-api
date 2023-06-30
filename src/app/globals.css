@@ -27,6 +27,53 @@ h6 {
   @apply text-sm font-semibold;
 }
 
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+  }
+}
+
 .icon-btn {
   @apply rounded-full hover:bg-slate-100 transition-colors p-2 cursor-pointer;
+}
+
+.video-grid {
+  @apply grid justify-center;
+  --min-width: min(50vw, 300px);
+  grid-template-columns: repeat(auto-fit, minmax(var(--min-width),  1fr));
+}
+
+.yt-chip-list {
+  --navigation-width: min(20vw, 70px);
+}
+
+.yt-chip-list-prev-btn, 
+.yt-chip-list-next-btn {
+  @apply absolute top-0 h-full flex items-center;
+  width: var(--navigation-width);
+}
+
+.yt-chip-list-prev-btn {
+  background: linear-gradient(90deg, #FFF 70%, #FFF0);
+}
+
+.yt-chip-list-next-btn {
+  background: linear-gradient(-90deg, #FFF 70%, #FFF0);
+  @apply right-0 justify-end;
+}
+
+.yt-chip {
+  font-size: 14px;
+  line-height: 20px;
+  @apply px-3 py-[6px] bg-slate-200 rounded-md font-medium w-max hover:bg-slate-300 transition-colors cursor-pointer;
+}
+
+.yt-chips {
+  margin-left: var(--navigation-width);
+  margin-right: var(--navigation-width);
 }
