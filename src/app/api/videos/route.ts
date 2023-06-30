@@ -1,13 +1,14 @@
 import { paths, serializeObject } from "@/helpers/api"
 import { NextResponse } from "next/server"
+import type { YouTubeParams } from "@/helpers/youtube"
 
 export async function GET(req:Request) {
   const { searchParams } = new URL(req.url)
 
   const categoryId = searchParams.get('categoryId')
 
-  const defaultQuery = {
-    key: process.env.YOUTUBE_API_KEY,
+  const defaultQuery:YouTubeParams = {
+    key: process.env.YOUTUBE_API_KEY as string,
     maxResults: 25,
     chart: 'mostPopular',
     regionCode: 'US',

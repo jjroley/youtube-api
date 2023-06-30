@@ -37,6 +37,23 @@ export type YouTubeVideo = {
   statistics: Statistics
 }
 
+export type YouTubeParams = {
+  key: string,
+  maxResults?: number
+  chart?: string
+  regionCode?: string
+  part?: string
+  videoCategoryId?: string
+}
+
+const defaultQuery = {
+  key: process.env.YOUTUBE_API_KEY,
+  maxResults: 25,
+  chart: 'mostPopular',
+  regionCode: 'US',
+  part: "snippet,contentDetails,statistics",
+}
+
 export default class YouTube {
   static defaultParams:queryParams = {
     regionCode: "US",
