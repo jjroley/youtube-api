@@ -17,8 +17,6 @@ type SidebarButtonProps = {
 export default function SidebarButton({ fillIcon, outlineIcon, text, href, small = false }:SidebarButtonProps) {
   const path = usePathname()
 
-  console.log(path)
-
   const isActive = path === href;
 
   const Icon = isActive ? fillIcon : outlineIcon

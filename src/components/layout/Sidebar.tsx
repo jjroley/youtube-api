@@ -41,9 +41,9 @@ export default function Sidebar() {
   }
 
   return (
-    <div className={`h-full overflow-y-auto`}>
+    <div className={`h-full overflow-y-auto main-sidebar z-50 relative`}>
       {
-        !isOpen &&
+        (!isOpen || isDrawer) &&
         <div>
           <SidebarLink fillIcon={HomeFill} outlineIcon={Home} href='/' small text={"Home"} />
           <SidebarLink fillIcon={Shorts} outlineIcon={Shorts} href='/shorts' small text={"Shorts"} />

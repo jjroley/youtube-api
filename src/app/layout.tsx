@@ -20,17 +20,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        
         <Providers>
           <div className='flex h-screen flex-col'>
             <div className='flex-grow-0'>
               <Header />
             </div>
-            <div className='flex-1 flex'>
+            <div className='flex-1 flex w-screen'>
               <div className='h-full'>
                 <Sidebar />
               </div>
-              <div className='flex-1 h-full p-3'>
+              <div className='flex-1 h-full min-w-0'>
                 { children }
               </div>
             </div>
