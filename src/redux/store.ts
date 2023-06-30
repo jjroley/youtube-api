@@ -2,10 +2,12 @@ import { configureStore } from "@reduxjs/toolkit"
 
 // import slices
 import layoutReducer from './layout/layoutSlice'
+import videosReducer from './videos/videosSlice'
 
 export const store = configureStore({
   reducer: {
-    layoutReducer
+    layoutReducer,
+    videosReducer
   },
   devTools: process.env.NODE_ENV !== "production"
 })
