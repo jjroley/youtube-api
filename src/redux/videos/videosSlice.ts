@@ -25,7 +25,7 @@ const initialState:VideosState = {
 }
 
 export const getVideos = createAsyncThunk(
-  'videis/getVideos',
+  'videos/getVideos',
   async () => {
     console.log("Starting videos fetch")
     const res = await fetch(`${clientPaths.videos}`).then(res => res.json())
