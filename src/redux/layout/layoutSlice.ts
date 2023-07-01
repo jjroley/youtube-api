@@ -1,11 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+type screenSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+
 type LayoutState = {
   sidebarOpen: boolean
+  screenSize: screenSize
 }
 
+
 const initialState = {
-  sidebarOpen: false
+  sidebarOpen: false,
+  screenSize: 'xs'
 } as LayoutState
 
 export const layout = createSlice({
@@ -13,13 +18,16 @@ export const layout = createSlice({
   initialState,
   reducers: {
     openSidebar: (state) => {
-      return { ...state, sidebarOpen: true }
+      state.sidebarOpen = true
     },
     closeSidebar: (state) => {
-      return { ...state, sidebarOpen: false }
+      state.sidebarOpen = false
     },
     toggleSidebar: (state) => {
-      return { ...state, sidebarOpen: !state.sidebarOpen }
+      state.sidebarOpen = !state.sidebarOpen
+    },
+    setScreenSize: (state, action) => {
+      state.screenSize = action.payload
     }
   }
 })
