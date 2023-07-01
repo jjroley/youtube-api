@@ -3,12 +3,16 @@ import { configureStore } from "@reduxjs/toolkit"
 // import slices
 import layoutReducer from './layout/layoutSlice'
 import videosReducer from './videos/videosSlice'
+import { api } from "./api"
 
 export const store = configureStore({
   reducer: {
     layoutReducer,
-    videosReducer
+    videosReducer,
+    [api.reducerPath]: api.reducer
   },
+  middleware: (getDefaultMiddleward) => 
+    getDefaultMiddleward().concat(api.middleware),
   devTools: process.env.NODE_ENV !== "production"
 })
 

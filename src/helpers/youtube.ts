@@ -35,6 +35,9 @@ export type YouTubeVideo = {
   id: string
   snippet: Snippet
   statistics: Statistics
+  player?: {
+    embedHtml: TrustedHTML
+  }
 }
 
 export type YouTubeParams = {
@@ -57,7 +60,6 @@ const defaultQuery = {
 export default class YouTube {
   static defaultParams:queryParams = {
     regionCode: "US",
-    chart: "mostPopular",
     part: "snippet,contentDetails,statistics",
     key: process.env.YOUTUBE_API_KEY as string
   }
@@ -72,5 +74,44 @@ export default class YouTube {
     .then(res => res.json())
   }
 
-  
+  static async getVideo(videoId:string) {
+    const query = serializeObject({
+      ...YouTube.defaultParams,
+      id: videoId,
+      maxResults: 1,
+      part: "snippet,contentDetails,statistics,player"
+    })
+
+    const url = `${paths.videos}?${query}`
+
+    console.log("Getting video", url)
+
+    const res = await fetch(url)
+
+    if(res.status === 200) {
+      const data = await res.json()
+      console.log(data)
+      return data.items[0]
+    }
+
+    return null
+  }
+
+  static async getRelatedVideos(videoId:string) {
+    const query = serializeObject({
+      ...YouTube.defaultParams,
+      relatedToVideoId: videoId
+    })
+
+    const url = `${paths.search}?${query}`
+
+    const res = await fetch(url)
+
+    if(res.status === 200) {
+      const data = await res.json()
+      return data.items
+    }
+
+    return null
+  }
 }

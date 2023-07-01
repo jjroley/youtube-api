@@ -45,7 +45,7 @@ h6 {
 .video-grid {
   @apply grid justify-center;
   --min-width: min(50vw, 300px);
-  grid-template-columns: repeat(auto-fit, minmax(var(--min-width),  1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--min-width),  1fr));
 }
 
 .yt-chip-list {

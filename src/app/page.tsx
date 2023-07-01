@@ -5,27 +5,14 @@ import { useAppSelector } from '@/redux/hooks'
 import VideoItem from "@/components/video/VideoItem"
 
 import Chips from "@/components/layout/Chips"
-import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { getVideos } from '@/redux/videos/videosSlice'
 import { AppDispatch } from '@/redux/store'
+import { useGetVideosQuery } from '@/redux/api'
 
 
 export default function Home() {
-  const dispatch = useDispatch<AppDispatch>()
-  const { videos, loading, error } = useAppSelector(state => state.videosReducer)
-
-  useEffect(() => {
-    dispatch(getVideos())
-  }, [dispatch])
-
-  if(error) {
-    return error
-  }
-
-  if(loading) {
-    return "Loading boss"
-  }
+  const categoryId = useAppSelector(store => store.videosReducer.category)
+  const { data: videos, error, isLoading } = useGetVideosQuery(categoryId)
 
   return (
     <main className='w-full p-4'>
@@ -33,8 +20,10 @@ export default function Home() {
         
       <div className='video-grid gap-4 gap-y-10 justify-items-center mx-auto'>
         {
-          loading ?
+          isLoading ?
           "Loading videos" :
+          !videos ?
+          "No Videos Found" :
           videos.map(video => (
             <VideoItem data={video} key={video.id} />
           ))
