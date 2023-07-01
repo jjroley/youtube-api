@@ -1,6 +1,4 @@
 import YouTube, { YouTubeVideo } from "@/helpers/youtube"
-import Script from "next/script"
-import 'videojs-youtube/dist/YouTube.min.js'
 
 export default async function VideoPage({
   searchParams,
