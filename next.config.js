@@ -7,12 +7,5 @@ module.exports = {
       use: ['@svgr/webpack']
     })
     return config;
-  },
-  experimental: {
-    turbo: {
-      loaders: {
-        '.svg': ['@svgr/webpack'],
-      },
-    },
-  },
+  }
 }
