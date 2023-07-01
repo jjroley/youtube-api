@@ -11,14 +11,13 @@ import { getVideos } from '@/redux/videos/videosSlice'
 import { AppDispatch } from '@/redux/store'
 
 
-export default async function Home() {
+export default function Home() {
   const dispatch = useDispatch<AppDispatch>()
   const { videos, loading, error } = useAppSelector(state => state.videosReducer)
 
   useEffect(() => {
     dispatch(getVideos())
-    console.log("Component Loaded")
-  }, [])
+  }, [dispatch])
 
   if(error) {
     return error
@@ -43,5 +42,4 @@ export default async function Home() {
       </div>
     </main>
   )
-
 }
