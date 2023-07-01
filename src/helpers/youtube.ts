@@ -114,4 +114,26 @@ export default class YouTube {
 
     return null
   }
+
+  static async searchVideos(searchTerm:string) {
+    const query = serializeObject({
+      ...YouTube.defaultParams,
+      q: encodeURIComponent(searchTerm),
+      maxResults: 25,
+      part: "snippet",
+    })
+
+    const url = `${paths.search}?${query}`
+
+    console.log(url)
+
+    const res = await fetch(url)
+
+    if(res.status === 200) {
+      const data = await res.json()
+      return data.items
+    }
+
+    return null
+  }
 }

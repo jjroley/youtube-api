@@ -1,11 +1,13 @@
 import { ArrowLeft, Mic, Search } from "lucide-react";
 import useBreakpoints from "@/hooks/useBreakpoints";
-import { useRef, useState } from "react";
-
+import { FormEvent, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function SearchBar() {
+  const router = useRouter()
   const inputRef = useRef<HTMLInputElement>(null)
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [searchTerm, setSearchTerm] = useState<string>('')
   const { screenIs } = useBreakpoints()
 
   const toggleSearch = () => {
@@ -19,14 +21,25 @@ export default function SearchBar() {
     inputRef.current?.focus()
   }
 
+  const handleSearch = (e:FormEvent) => {
+    e.preventDefault()
+
+    if(!searchTerm) {
+      setTimeout(focus, 50)
+      return;
+    }
+
+    router.push(`/search?q=${encodeURIComponent(searchTerm)}`)
+  }
+
   const conditionalClasses = screenIs('sm') ? 'w-[50vw] max-w-[650px] ' : ''
 
   const searchForm = (
-    <form className={`${conditionalClasses} flex-1 border rounded-full flex overflow-hidden shadow-inner`}>
-      <input ref={inputRef} type='text' placeholder="Search..." className='p-2 pl-4 flex-1 text-sm focus:outline-1 focus:outline-blue-500 focus:shadow-inner rounded-l-full '></input>
-      <div className='p-2 px-6 flex-0 border-l bg-slate-100 flex justify-center items-center cursor-pointer' onClick={focus}>
+    <form className={`${conditionalClasses} flex-1 border rounded-full flex overflow-hidden shadow-inner`} onSubmit={handleSearch}>
+      <input ref={inputRef} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} type='text' placeholder="Search..." className='p-2 pl-4 flex-1 text-sm focus:outline-1 focus:outline-blue-500 focus:shadow-inner rounded-l-full '></input>
+      <button className='p-2 px-6 flex-0 border-l bg-slate-100 flex justify-center items-center cursor-pointer'>
         <Search strokeWidth={1} size={24} />
-      </div>
+      </button>
     </form>
   )
 
