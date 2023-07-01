@@ -26,7 +26,7 @@ export async function GET(req:Request) {
 
   const videos = await fetch(`${paths.videos}?${query}`, {
     next: {
-      revalidate: 0 // every hour
+      revalidate: 5 * 60 // every 5 minutes
     }
   })
   .then(res => res.json())

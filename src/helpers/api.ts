@@ -2,12 +2,14 @@ const baseUrl = "https://www.googleapis.com/youtube/v3"
 const clientBaseUrl = `${process.env.NEXT_PUBLIC_CLIENT_URL}/api`
 
 export const paths = {
+  baseUrl: baseUrl,
   search: baseUrl + '/search',
   videos: baseUrl + '/videos',
   categories: baseUrl + '/videoCategories'
 }
 
 export const clientPaths = {
+  baseUrl: clientBaseUrl,
   videos: clientBaseUrl + '/videos',
   categories: clientBaseUrl + '/categories'
 }
