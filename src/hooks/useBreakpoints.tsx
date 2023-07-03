@@ -30,6 +30,6 @@ export default function useBreakpoints() {
 
   return {
     size,
-    screenIs: (size:screenSize) => window.innerWidth > sizes[size]
+    screenIs: (size:screenSize) => typeof window === 'undefined' ? true : window.innerWidth > sizes[size]
   }
 }
