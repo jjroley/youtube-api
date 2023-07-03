@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 type screenSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 export default function useBreakpoints() {
+  const width = useRef(1200)
   const [size, setSize] = useState<string|null>(null)
   
   const sizes = {
@@ -14,6 +15,7 @@ export default function useBreakpoints() {
   }
 
   const handleResize = () => {
+    width.current = window.innerWidth
     for(const sz in sizes) {
       if(window.innerWidth > sizes[sz as keyof typeof sizes]) {
         setSize(sz)
@@ -23,6 +25,7 @@ export default function useBreakpoints() {
   }
 
   useEffect(() => {
+    handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
@@ -30,6 +33,6 @@ export default function useBreakpoints() {
 
   return {
     size,
-    screenIs: (size:screenSize) => window.innerWidth > sizes[size]
+    screenIs: (size:screenSize) => width.current >= sizes[size]
   }
 }
