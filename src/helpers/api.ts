@@ -1,5 +1,5 @@
 const baseUrl = "https://www.googleapis.com/youtube/v3"
-const clientBaseUrl = `${process.env.NEXT_PUBLIC_CLIENT_URL}/api`
+const clientBaseUrl = '/api'
 
 export const paths = {
   baseUrl: baseUrl,
