@@ -1,3 +1,5 @@
+'use client'
+
 import { ArrowLeft, Mic, Search } from "lucide-react";
 import useBreakpoints from "@/hooks/useBreakpoints";
 import { FormEvent, useRef, useState } from "react";

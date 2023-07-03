@@ -1,3 +1,5 @@
+'use client'
+
 import { YouTubeVideo } from "@/helpers/youtube";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime"
