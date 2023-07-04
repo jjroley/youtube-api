@@ -28,7 +28,7 @@ export default async function SearchPage({
         </div>
         {
           videos.map((video) => (
-            <SearchResult data={video} /> 
+            <SearchResult key={video.id} data={video} /> 
           ))
         } 
       </div>
