@@ -15,10 +15,10 @@ export default function Home() {
   const { data: videos, error, isLoading } = useGetVideosQuery(categoryId)
 
   return (
-    <main className='w-full p-4'>
+    <main className='w-full sm:p-4'>
       <Chips />
         
-      <div className='video-grid gap-4 gap-y-10 justify-items-center mx-auto'>
+      <div className='video-grid gap-x-4 sm:gap-y-10 mx-auto'>
         {
           isLoading ?
           "Loading videos" :

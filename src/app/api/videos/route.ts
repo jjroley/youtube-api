@@ -1,34 +1,17 @@
 import { paths, serializeObject } from "@/helpers/api"
 import { NextResponse } from "next/server"
 import type { YouTubeParams } from "@/helpers/youtube"
+import YouTube from "@/helpers/youtube"
 
 export async function GET(req:Request) {
   const { searchParams } = new URL(req.url)
 
   const categoryId = searchParams.get('categoryId')
+  const includeChannel = searchParams.get('includeChannel')
 
-  const defaultQuery:YouTubeParams = {
-    key: process.env.YOUTUBE_API_KEY as string,
-    maxResults: 25,
-    chart: 'mostPopular',
-    regionCode: 'US',
-    part: "snippet,contentDetails,statistics",
-  }
+  console.log("Include channel?", includeChannel)
 
-  if(categoryId) {
-    defaultQuery.videoCategoryId = categoryId
-  }
+  const videos = await YouTube.getVideos(categoryId, includeChannel === 'true')
 
-  const query = serializeObject({
-    ...defaultQuery
-  })
-
-  const data = await fetch(`${paths.videos}?${query}`, {
-    next: {
-      revalidate: 5 * 60 // every 5 minutes
-    }
-  })
-  .then(res => res.json())
-
-  return NextResponse.json(data.items)
+  return NextResponse.json(videos)
 }

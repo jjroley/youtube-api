@@ -33,6 +33,7 @@ export default function useBreakpoints() {
 
   return {
     size,
-    screenIs: (size:screenSize) => width.current >= sizes[size]
+    widerThan: (size:screenSize) => width.current >= sizes[size],
+    narrowerThan: (size:screenSize) => width.current <  sizes[size]
   }
 }

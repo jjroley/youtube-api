@@ -8,7 +8,7 @@ export const api = createApi({
   tagTypes: ['videos'],
   endpoints: (builder) => ({
     getVideos: builder.query<YouTubeVideo[], string|null>({
-      query: (id) => id ? `videos?categoryId=${id}` : 'videos',
+      query: (id) => id ? `videos?categoryId=${id}&includeChannel=true` : 'videos?includeChannel=true',
       providesTags: (result, error, categoryId) => [{type: 'videos', id: categoryId || 0 }]
     }),
   }),

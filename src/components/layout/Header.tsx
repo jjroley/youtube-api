@@ -10,7 +10,6 @@ import useBreakpoints from "@/hooks/useBreakpoints"
 import SearchBar from "./SearchBar"
 
 export default function Header() {
-  const { screenIs } = useBreakpoints()
   const dispatch = useAppDispatch()
 
   return (

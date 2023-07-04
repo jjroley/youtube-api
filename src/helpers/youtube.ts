@@ -1,10 +1,5 @@
 import { queryParams, serializeObject, paths } from "./api"
 
-type videosQuery = {
-  maxResults?: number
-  page?: number
-}
-
 type Thumbnail = {
   url: string
   width: number
@@ -74,29 +69,47 @@ export type YouTubeParams = {
   videoCategoryId?: string
 }
 
-const defaultQuery = {
-  key: process.env.YOUTUBE_API_KEY,
-  maxResults: 25,
-  chart: 'mostPopular',
-  regionCode: 'US',
-  part: "snippet,contentDetails,statistics",
-}
-
 export default class YouTube {
-  static defaultParams:queryParams = {
+  static defaultParams:YouTubeParams = {
     regionCode: "US",
     part: "snippet,contentDetails,statistics",
     key: process.env.YOUTUBE_API_KEY as string
   }
 
-  static async getVideos(params:videosQuery) {
-    const query = serializeObject({
+  static async getVideos(categoryId:string|null, channel = false) {
+    const params:YouTubeParams = {
       ...YouTube.defaultParams,
-      ...params
-    })
+      maxResults: 25,
+      chart: 'mostPopular'
+    }
 
-    return await fetch(`${paths.videos}?${query}`)
-    .then(res => res.json())
+    if(categoryId !== null) {
+      params.videoCategoryId = categoryId
+    }
+
+    const query = serializeObject(params)
+
+    const url = `${paths.videos}?${query}`
+
+    const res = await fetch(url)
+
+    if(res.status === 200) {
+      const data = await res.json()
+      const videos:YouTubeVideo[] = data.items.filter((item:any) => !!item)
+
+      if(channel) {
+        return await Promise.all(videos.map(async video => {
+          return {
+            ...video,
+            channel: await YouTube.getChannel(video.snippet.channelId)
+          }
+        }))
+      }
+
+      return videos
+    }
+
+    return []
   }
 
   static async getChannel(channelId:string):Promise<Channel|null> {

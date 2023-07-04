@@ -12,7 +12,7 @@ export default function SearchBar() {
   const inputRef = useRef<HTMLInputElement>(null)
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [searchTerm, setSearchTerm] = useState<string>(params.get('q') || '')
-  const { screenIs } = useBreakpoints()
+  const { widerThan } = useBreakpoints()
 
   const toggleSearch = () => {
     if(!isOpen) {
@@ -36,7 +36,7 @@ export default function SearchBar() {
     router.push(`/search?q=${encodeURIComponent(searchTerm)}`)
   }
 
-  const conditionalClasses = screenIs('sm') ? 'w-[50vw] max-w-[650px] ' : ''
+  const conditionalClasses = widerThan('sm') ? 'w-[50vw] max-w-[650px] ' : ''
 
   const searchForm = (
     <form className={`${conditionalClasses} flex-1 border rounded-full flex overflow-hidden shadow-inner`} onSubmit={handleSearch}>
@@ -47,7 +47,7 @@ export default function SearchBar() {
     </form>
   )
 
-  if(screenIs('sm')) {
+  if(widerThan('sm')) {
     return searchForm
   }
 

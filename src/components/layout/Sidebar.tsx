@@ -12,29 +12,23 @@ import YouTubeLogo from '@icons/youtube.svg'
 
 import SidebarLink from './SidebarLink'
 import useBreakpoints from '@/hooks/useBreakpoints'
+import { usePathname } from 'next/navigation'
 
 
 
 export default function Sidebar() {
   const isOpen = useAppSelector((state) => state.layoutReducer.sidebarOpen)
   const dispatch = useAppDispatch()
-  const { screenIs } = useBreakpoints()
-
-  const [isDrawer, setIsDrawer] = useState<Boolean>(false)
-
-  const handleResize = () => {
-    setIsDrawer(window.innerWidth <= 1312)
-  }
-
+  const { size, widerThan, narrowerThan } = useBreakpoints()
+  const pathname = usePathname()
   useEffect(() => {
-    handleResize()
-    addEventListener('resize', handleResize)
-    return () => {
-      removeEventListener('resize', handleResize)
-    }
-  }, [])
+    console.log("Size changed", size)
+  }, [size])
+
 
   let wrapperClasses = 'bg-black bg-opacity-0'
+
+  const isDrawer = narrowerThan('sm')
 
   if(!isOpen) {
     wrapperClasses += ' hidden'
@@ -46,7 +40,8 @@ export default function Sidebar() {
   return (
     <div className={`h-full overflow-y-auto main-sidebar z-50 relative`}>
       {
-        (!isOpen || isDrawer) && !screenIs('xs') &&
+        isOpen || size === 'xs' ?
+        null :
         <div>
           <SidebarLink fillIcon={HomeFill} outlineIcon={Home} href='/' small text={"Home"} />
           <SidebarLink fillIcon={Shorts} outlineIcon={Shorts} href='/shorts' small text={"Shorts"} />
@@ -56,7 +51,7 @@ export default function Sidebar() {
         <div className={wrapperClasses}>
           <div className={`p-3 w-[240px] h-full bg-white`}>
             {
-              isDrawer &&
+              narrowerThan('sm') &&
               <div className="flex-1 flex items-center pr-4 mb-4">
                 <div className='icon-btn w-10 h-10'>
                   <Menu onClick={() => dispatch(closeSidebar())} />
