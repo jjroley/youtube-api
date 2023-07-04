@@ -23,15 +23,12 @@ export async function GET(req:Request) {
     ...defaultQuery
   })
 
-
   const data = await fetch(`${paths.videos}?${query}`, {
     next: {
       revalidate: 5 * 60 // every 5 minutes
     }
   })
   .then(res => res.json())
-
-  console.log("Videos data", data)
 
   return NextResponse.json(data.items)
 }

@@ -24,16 +24,6 @@ const initialState:VideosState = {
   error: null
 }
 
-export const getVideos = createAsyncThunk(
-  'videos/getVideos',
-  async () => {
-    console.log("Starting videos fetch")
-    const res = await fetch(`${clientPaths.videos}`).then(res => res.json())
-    console.log("Ending videos fetch")
-    return res.items
-  }
-)
-
 export const videos = createSlice({
   name: 'videos',
   initialState,
@@ -45,22 +35,6 @@ export const videos = createSlice({
       state.category = null
     }
   },
-  extraReducers: (builder) => {
-    builder.addCase(getVideos.pending, (state) => {
-      state.loading = true
-      console.log("Videos pending")
-    })
-    builder.addCase(getVideos.fulfilled, (state, action) => {
-      state.loading = false
-      state.videos = action.payload
-      console.log("Videos fulfilled")
-    })
-    builder.addCase(getVideos.rejected, (state, action) => {
-      state.loading = false
-      state.error = action.error.message || "Unexpected error occured"
-      console.log("Videos rejected")
-    })
-  }
 })
 
 export const {
@@ -69,6 +43,3 @@ export const {
 } = videos.actions
 
 export default videos.reducer
-
-
-

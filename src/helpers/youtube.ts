@@ -84,13 +84,10 @@ export default class YouTube {
 
     const url = `${paths.videos}?${query}`
 
-    console.log("Getting video", url)
-
     const res = await fetch(url)
 
     if(res.status === 200) {
       const data = await res.json()
-      console.log(data)
       return data.items[0]
     }
 
@@ -124,8 +121,6 @@ export default class YouTube {
     })
 
     const url = `${paths.search}?${query}`
-
-    console.log(url)
 
     const res = await fetch(url)
 

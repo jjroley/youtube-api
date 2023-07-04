@@ -11,8 +11,8 @@ export const store = configureStore({
     videosReducer,
     [api.reducerPath]: api.reducer
   },
-  middleware: (getDefaultMiddleward) => 
-    getDefaultMiddleward().concat(api.middleware),
+  middleware: (getDefaultMiddleware) => 
+    getDefaultMiddleware().concat(api.middleware),
   devTools: process.env.NODE_ENV !== "production"
 })
 
