@@ -1,11 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import type { YouTubeVideo } from '@/helpers/youtube'
-import { clientPaths } from '@/helpers/api'
 
 export const api = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({ baseUrl: clientPaths.baseUrl }),
+  baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
   tagTypes: ['videos'],
   endpoints: (builder) => ({
     getVideos: builder.query<YouTubeVideo[], string|null>({
