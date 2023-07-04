@@ -5,6 +5,7 @@ export const paths = {
   baseUrl: baseUrl,
   search: baseUrl + '/search',
   videos: baseUrl + '/videos',
+  channels: baseUrl + '/channels',
   categories: baseUrl + '/videoCategories'
 }
 

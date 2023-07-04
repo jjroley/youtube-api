@@ -19,16 +19,13 @@ export default function Header() {
         <div className='icon-btn w-10 h-10' onClick={() => dispatch(toggleSidebar())}>
           <Menu />
         </div>
-        <div className="px-5">
+        <div className="pl-5">
           <YouTubeLogo />
         </div>
       </div>
 
       <SearchBar />
       
-      
-      
-
       <div className='flex-1 items-center justify-end flex pr-4'>
         <div className='icon-btn mr-3'>
           <MoreVertical strokeWidth={1} />

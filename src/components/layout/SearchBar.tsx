@@ -3,13 +3,15 @@
 import { ArrowLeft, Mic, Search } from "lucide-react";
 import useBreakpoints from "@/hooks/useBreakpoints";
 import { FormEvent, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SearchBar() {
   const router = useRouter()
+  const params = useSearchParams()
+
   const inputRef = useRef<HTMLInputElement>(null)
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [searchTerm, setSearchTerm] = useState<string>(params.get('q') || '')
   const { screenIs } = useBreakpoints()
 
   const toggleSearch = () => {

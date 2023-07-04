@@ -39,7 +39,7 @@ h6 {
 }
 
 .icon-btn {
-  @apply rounded-full hover:bg-slate-100 transition-colors p-2 cursor-pointer;
+  @apply rounded-full hover:bg-slate-100 transition-colors p-2 cursor-pointer inline-flex;
 }
 
 .video-grid {

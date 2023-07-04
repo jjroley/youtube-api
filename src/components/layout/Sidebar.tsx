@@ -11,12 +11,14 @@ import Menu from '@icons/menu.svg'
 import YouTubeLogo from '@icons/youtube.svg'
 
 import SidebarLink from './SidebarLink'
+import useBreakpoints from '@/hooks/useBreakpoints'
 
 
 
 export default function Sidebar() {
   const isOpen = useAppSelector((state) => state.layoutReducer.sidebarOpen)
   const dispatch = useAppDispatch()
+  const { screenIs } = useBreakpoints()
 
   const [isDrawer, setIsDrawer] = useState<Boolean>(false)
 
@@ -44,7 +46,7 @@ export default function Sidebar() {
   return (
     <div className={`h-full overflow-y-auto main-sidebar z-50 relative`}>
       {
-        (!isOpen || isDrawer) &&
+        (!isOpen || isDrawer) && !screenIs('xs') &&
         <div>
           <SidebarLink fillIcon={HomeFill} outlineIcon={Home} href='/' small text={"Home"} />
           <SidebarLink fillIcon={Shorts} outlineIcon={Shorts} href='/shorts' small text={"Shorts"} />

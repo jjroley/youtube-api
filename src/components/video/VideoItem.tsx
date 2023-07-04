@@ -1,20 +1,25 @@
 'use client'
-
-import { YouTubeVideo } from "@/helpers/youtube";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime"
 import Link from "next/link";
-import numeral from 'numeral'
+import { useMemo } from "react";
+import { timeSince, shortenNumber, getDuration } from "@/helpers";
 
-dayjs.extend(relativeTime)
+import type { YouTubeVideo } from "@/helpers/youtube";
+
 
 export default function VideoItem({ data }: { data: YouTubeVideo }) {
-  const absoluteTime = dayjs().to(data.snippet.publishedAt)
-  const viewCount = numeral(data.statistics.viewCount).format('0a').toUpperCase()
+  const absoluteTime = useMemo(() => timeSince(data.snippet.publishedAt), [data.snippet.publishedAt])
+  const viewCount = useMemo(() => shortenNumber(data.statistics.viewCount), [data.statistics.viewCount])
+  const videoDuration = data.contentDetails?.duration ? getDuration(data.contentDetails.duration) : ''
+
   return (
     <Link href={{ pathname: 'watch', query: { v: data.id } }}>
       <div className="w-full flex flex-col">
-          <img src={data.snippet.thumbnails.medium.url} className='max-w-full rounded-md mb-2' />
+          <div className="relative mb-2">
+            <img src={data.snippet.thumbnails.medium.url} alt={data.snippet.title} className="rounded-lg" />
+            <div className="absolute bottom-1 right-1 text-xs text-white bg-black bg-opacity-80 p-[1px]">
+              {videoDuration}
+            </div>
+          </div>
           <div className="font-medium">{data.snippet.title}</div>
           <div className='text-slate-600 text-sm'>{data.snippet.channelTitle}</div>
           <div className='text-slate-600 text-sm flex items-center gap-1'>
